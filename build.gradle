@@ -1,0 +1,23 @@
+allprojects {
+    group 'com.sharma'
+    version '1.0-SNAPSHOT'
+
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+}
+
+subprojects {
+    plugins.withId('java') {
+        jar {
+            manifest {
+                attributes("Implementation-Title": "Gradle",
+                        "Implementation-Version": version, "Author": "Raman Sharma")
+            }
+        }
+    }
+
+}
