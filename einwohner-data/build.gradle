@@ -4,5 +4,6 @@ plugins {
 sourceCompatibility = 1.8
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.projectlombok:lombok'
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator'
 }

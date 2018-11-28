@@ -1,0 +1,11 @@
+/* Nur für die Java sub Projects, Jetzt Projects kann spring libraries ohne version benutzen */
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework:spring-framework-bom:5.1.2.RELEASE'
+    }
+    dependencies {
+        dependency 'org.projectlombok:lombok:1.18.2'
+        dependency group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.2'
+        dependency group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.13.Final'
+    }
+}

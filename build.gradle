@@ -1,23 +1,43 @@
-allprojects {
-    group 'com.sharma'
-    version '1.0-SNAPSHOT'
-
-
+buildscript {
     repositories {
         mavenCentral()
         jcenter()
     }
 
+    /*
+     * Mit dieser plugin, Man kann "dependency Management" konfiguration wie in maven steht.
+     * Alle information steht bei dieser link
+     *
+     * https://spring.io/blog/2015/02/23/better-dependency-management-for-gradle
+     */
+
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
+    }
+
 }
 
-subprojects {
+allprojects {
+    group 'com.sharma'
+    version '1.0-SNAPSHOT'
+}
+
+subprojects {p ->
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    apply plugin: 'io.spring.dependency-management'
+
     plugins.withId('java') {
+
         jar {
             manifest {
-                attributes("Implementation-Title": "Gradle",
+                attributes("Implementation-Title": p.name,
                         "Implementation-Version": version, "Author": "Raman Sharma")
             }
         }
+        p.apply from: "$rootDir/gradle/dependencies.gradle"
     }
 
 }

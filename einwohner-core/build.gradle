@@ -5,7 +5,13 @@ plugins {
 sourceCompatibility = 1.8
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation project(':einwohner-orm')
-    implementation project(':einwohner-data')
+
+    /*Spring libraries*/
+    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework:spring-core'
+    implementation 'org.springframework:spring-beans'
+    implementation 'org.springframework:spring-aop'
+    implementation group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.2'
+    implementation 'org.projectlombok:lombok'
 }

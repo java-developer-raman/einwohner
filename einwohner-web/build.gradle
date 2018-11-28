@@ -1,9 +1,22 @@
 plugins {
     id 'java'
+    id 'war'
 }
 
 sourceCompatibility = 1.8
 
+war {
+    archiveName = 'einwohner.war'
+}
+
 dependencies {
+    implementation project(':einwohner-data')
+    implementation project(':einwohner-core')
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.springframework:spring-webmvc'
+    implementation 'org.springframework:spring-web'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
+    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 }
