@@ -18,5 +18,12 @@ dependencies {
     implementation 'org.springframework:spring-web'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    /* Servlet API */
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+
+    /* Log back */
+    compileOnly group: 'ch.qos.logback', name: 'logback-classic'
+    compileOnly group: 'ch.qos.logback', name: 'logback-core'
+    compileOnly group: 'ch.qos.logback', name: 'logback-access'
+    compileOnly group: 'org.slf4j', name: 'jcl-over-slf4j'
 }

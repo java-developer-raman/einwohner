@@ -5,6 +5,8 @@ import com.sharma.core.dto.PersonDto;
 import com.sharma.data.resource.PersonRequest;
 import com.sharma.data.resource.PersonResponse;
 import com.sharma.core.service.PersonService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,8 @@ import javax.validation.Valid;
 @RestController
 public class PersonController {
 
+    private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
+
     @Autowired
     private Transformer transformer;
     @Autowired
@@ -26,6 +30,7 @@ public class PersonController {
     @PostMapping(path = "/person",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public PersonResponse erstelltPerson(@Valid @RequestBody PersonRequest personRequest){
+        logger.debug("innen erstelltPerson");
         PersonDto personDto = transformer.transform(personRequest, PersonDto.class);
         return transformer.transform(personService.erstelltPerson(personDto), PersonResponse.class);
     }

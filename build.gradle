@@ -37,7 +37,9 @@ subprojects {p ->
                         "Implementation-Version": version, "Author": "Raman Sharma")
             }
         }
+        configurations.all {
+            exclude group: "commons-logging", module: "commons-logging"
+        }
         p.apply from: "$rootDir/gradle/dependencies.gradle"
     }
-
 }
