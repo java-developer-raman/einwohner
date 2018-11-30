@@ -22,8 +22,8 @@ dependencies {
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 
     /* Log back */
-    compileOnly group: 'ch.qos.logback', name: 'logback-classic'
-    compileOnly group: 'ch.qos.logback', name: 'logback-core'
-    compileOnly group: 'ch.qos.logback', name: 'logback-access'
-    compileOnly group: 'org.slf4j', name: 'jcl-over-slf4j'
+    implementation group: 'ch.qos.logback', name: 'logback-classic'
+    implementation group: 'ch.qos.logback', name: 'logback-core'
+    implementation group: 'ch.qos.logback', name: 'logback-access'
+    implementation group: 'org.slf4j', name: 'jcl-over-slf4j'
 }
