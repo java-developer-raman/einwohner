@@ -2,14 +2,13 @@ package com.sharma.web.controller;
 
 import com.sharma.core.collaborator.Transformer;
 import com.sharma.core.dto.PersonDto;
+import com.sharma.core.service.PersonService;
 import com.sharma.data.resource.PersonRequest;
 import com.sharma.data.resource.PersonResponse;
-import com.sharma.core.service.PersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,11 +32,5 @@ public class PersonController {
         logger.debug("innen erstelltPerson");
         PersonDto personDto = transformer.transform(personRequest, PersonDto.class);
         return transformer.transform(personService.erstelltPerson(personDto), PersonResponse.class);
-    }
-
-    @GetMapping("/hallo")
-    @ResponseBody
-    public String halloWorld(){
-        return "Hallo Welt";
     }
 }
