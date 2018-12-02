@@ -1,6 +1,6 @@
 package com.sharma.web.controller;
 
-import com.sharma.data.resource.ApplicationInfo;
+import com.sharma.data.resource.AnwendungsInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,19 +13,19 @@ import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 @RestController
-public class ApplicationInformationController {
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationInformationController.class);
+public class AnwendungsInformationenController {
+    private static final Logger logger = LoggerFactory.getLogger(AnwendungsInformationenController.class);
 
-    @GetMapping(path = "/application-info")
+    @GetMapping(path = "/anwendungs-info")
     @ResponseBody
-    public ApplicationInfo getApplicationInformation(){
-        ApplicationInfo applicationInfo = new ApplicationInfo();
-        Manifest manifest = getManifest(ApplicationInformationController.class);
+    public AnwendungsInfo getAnwendungsInformationen(){
+        AnwendungsInfo anwendungsInfo = new AnwendungsInfo();
+        Manifest manifest = getManifest(AnwendungsInformationenController.class);
         Attributes attr = manifest.getMainAttributes();
-        applicationInfo.setProjectName(attr.getValue("Implementation-Title"));
-        applicationInfo.setProjectVersion(attr.getValue("Implementation-Version"));
-        applicationInfo.setAutor(attr.getValue("Author"));
-        return applicationInfo;
+        anwendungsInfo.setProjectName(attr.getValue("Implementation-Title"));
+        anwendungsInfo.setProjectVersion(attr.getValue("Implementation-Version"));
+        anwendungsInfo.setAutor(attr.getValue("Author"));
+        return anwendungsInfo;
     }
 
     private Manifest getManifest(Class<?> clz) {

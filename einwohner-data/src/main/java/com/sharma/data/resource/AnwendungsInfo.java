@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class ApplicationInfo {
+public class AnwendungsInfo {
     private String projectName;
     private String projectVersion;
     private String autor;

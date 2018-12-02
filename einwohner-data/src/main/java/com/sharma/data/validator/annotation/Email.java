@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = EmailValidator.class)
 public @interface Email {
-    String message() default "Invalid email. Expected xxx@xxx.xx";
+    String message() default "Email ist nicht richtig, erwartet wie xxx@xxx.xx";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
