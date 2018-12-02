@@ -13,3 +13,8 @@
 ```
 3. Copy logback.xml in classpath
 
+## Getting properties from META-INF
+1. Look into ApplicationInformationController
+
+## Gradle Task for Application deployment, And how to include other gradle files.
+1. Look into gradle\deployment.gradle and einwohner-web\build.gradle
