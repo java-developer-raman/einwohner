@@ -13,9 +13,7 @@ buildscript {
 
     dependencies {
         classpath 'io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE'
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
     }
-
 }
 
 allprojects {

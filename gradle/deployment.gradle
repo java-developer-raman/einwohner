@@ -1,0 +1,34 @@
+def TOMCAT_HOME = '/home/raman/raman_work/programs/apache-tomcat-9.0.13'
+def DEPLOYMENT_DIR = 'webapps'
+
+task deploy(type: Copy, group: 'App Deployment/Undeployment', description: 'To deploy the application') {
+    from war.archivePath into "$TOMCAT_HOME/$DEPLOYMENT_DIR" rename 'einwohner(.*).war', 'einwohner.war'
+}
+
+task unDeploy(type: Delete, group: 'App Deployment/Undeployment', description: 'To undeploy the application') {
+    delete "$TOMCAT_HOME/$DEPLOYMENT_DIR/einwohner", "$TOMCAT_HOME/$DEPLOYMENT_DIR/einwohner.war"
+}
+
+task startServer(type: Exec, group: 'Server start/stop', description: 'To Start and stop server'){
+    workingDir "$TOMCAT_HOME/bin"
+    commandLine './startup.sh'
+    //store the output instead of printing to the console:
+    standardOutput = new ByteArrayOutputStream()
+
+    //extension method startServer.output() can be used to obtain the output:
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
+
+task stopServer(type: Exec, group: 'Server start/stop', description: 'To Start and stop server'){
+    workingDir "$TOMCAT_HOME/bin"
+    commandLine './shutdown.sh'
+    //store the output instead of printing to the console:
+    standardOutput = new ByteArrayOutputStream()
+
+    //extension method stopServer.output() can be used to obtain the output:
+    ext.output = {
+        return standardOutput.toString()
+    }
+}

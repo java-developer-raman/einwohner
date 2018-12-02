@@ -6,12 +6,13 @@ plugins {
 sourceCompatibility = 1.8
 
 war {
-    archiveName = 'einwohner.war'
     manifest {
         attributes("Implementation-Title": project.parent.name,
                 "Implementation-Version": version, "Author": "Raman Sharma")
     }
 }
+
+project.apply from: "$rootDir/gradle/deployment.gradle"
 
 dependencies {
     implementation project(':einwohner-data')
