@@ -1,16 +1,16 @@
-def TOMCAT_HOME = '/home/raman/raman_work/programs/apache-tomcat-9.0.13'
+ext.DEFAULT_TOMCAT_HOME = '/home/raman/raman_work/programs/apache-tomcat-9.0.13'
 def DEPLOYMENT_DIR = 'webapps'
 
 task deploy(type: Copy, group: 'App Deployment/Undeployment', description: 'To deploy the application') {
-    from war.archivePath into "$TOMCAT_HOME/$DEPLOYMENT_DIR" rename 'einwohner(.*).war', 'einwohner.war'
+    from war.archivePath into getTomcatHome() + "/$DEPLOYMENT_DIR" rename 'einwohner(.*).war', 'einwohner.war'
 }
 
 task unDeploy(type: Delete, group: 'App Deployment/Undeployment', description: 'To undeploy the application') {
-    delete "$TOMCAT_HOME/$DEPLOYMENT_DIR/einwohner", "$TOMCAT_HOME/$DEPLOYMENT_DIR/einwohner.war"
+    delete getTomcatHome() + "/$DEPLOYMENT_DIR/einwohner", getTomcatHome() + "/$DEPLOYMENT_DIR/einwohner.war"
 }
 
 task startServer(type: Exec, group: 'Server start/stop', description: 'To Start and stop server'){
-    workingDir "$TOMCAT_HOME/bin"
+    workingDir getTomcatHome() + "/bin"
     commandLine './startup.sh'
     //store the output instead of printing to the console:
     standardOutput = new ByteArrayOutputStream()
@@ -22,7 +22,7 @@ task startServer(type: Exec, group: 'Server start/stop', description: 'To Start 
 }
 
 task stopServer(type: Exec, group: 'Server start/stop', description: 'To Start and stop server'){
-    workingDir "$TOMCAT_HOME/bin"
+    workingDir getTomcatHome() + "/bin"
     commandLine './shutdown.sh'
     //store the output instead of printing to the console:
     standardOutput = new ByteArrayOutputStream()
@@ -31,4 +31,24 @@ task stopServer(type: Exec, group: 'Server start/stop', description: 'To Start a
     ext.output = {
         return standardOutput.toString()
     }
+}
+
+def getTomcatHome(){
+    def tomcatHome = versuchEinProperty('TOMCAT_HOME')
+    if(tomcatHome == null){
+        return DEFAULT_TOMCAT_HOME
+    }
+    return tomcatHome
+}
+
+def versuchEinProperty(String propertyName){
+    //ob Property in Project ist, z.B. -PTOMCAT_HOME=/home/tomcat
+    if(project.hasProperty(propertyName)){
+        return project[propertyName]
+    } else if(System.getProperty(propertyName) != null){
+        //ob Property in System properties ist, z.B. -DTOMCAT_HOME=/home/tomcat
+        return System.getProperty(propertyName)
+    }
+    //ob Property in system environment ist, z.B. export TOMCAT_HOME=/home/tomcat
+    return System.getenv(propertyName)
 }
