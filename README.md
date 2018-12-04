@@ -22,3 +22,6 @@
 
 ## Gradle Task for Application deployment, And how to include other gradle files.
 1. Look into gradle\deployment.gradle and einwohner-web\build.gradle
+
+## integrieren Sonar qube
+1. Sehen Sie
