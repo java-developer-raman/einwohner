@@ -9,8 +9,8 @@ import java.util.Date;
 @ToString
 @Data
 @Builder
-public class ErrorInfo {
-    private ErrorCode errorCode;
-    private String errorMessage;
-    private Date timeStamp;
+public class FehlerInfo {
+    private FehlerCode fehlerCode;
+    private String fehlerText;
+    private Date zeit;
 }

@@ -1,7 +1,7 @@
 package com.sharma.data.resource;
 
 import com.sharma.data.validator.annotation.Email;
-import com.sharma.data.validator.annotation.PhoneNumber;
+import com.sharma.data.validator.annotation.PhoneNummer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +22,8 @@ public class PersonRequest {
     private String nachName;
     @Email
     private String email;
-    @PhoneNumber
+    @PhoneNummer
     private String telefonNummer;
-    @PhoneNumber
+    @PhoneNummer
     private String handyNummer;
 }

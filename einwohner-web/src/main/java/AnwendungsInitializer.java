@@ -1,11 +1,11 @@
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class AnwendungsInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[]{
-                ApplicationConfiguration.class
+                AnwendungsConfiguration.class
         };
     }
 

@@ -1,5 +1,5 @@
 package com.sharma.data.resource;
 
-public enum ErrorCode {
+public enum FehlerCode {
     BAD_REQUEST;
 }
