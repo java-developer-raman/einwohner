@@ -15,13 +15,22 @@ buildscript {
         classpath 'io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE'
     }
 }
+plugins {
+    id "org.sonarqube" version "2.6.2"
+}
 
 allprojects {
     group 'com.sharma'
     version '1.0-SNAPSHOT'
+    sonarqube {
+        properties {
+            property "sonar.sources", "src"
+            property "sonar.issuesReport.html.enable", "true"
+        }
+    }
 }
 
-subprojects {p ->
+subprojects { p ->
     repositories {
         mavenCentral()
         jcenter()
@@ -40,5 +49,33 @@ subprojects {p ->
             exclude group: "commons-logging", module: "commons-logging"
         }
         p.apply from: "$rootDir/gradle/dependencies.gradle"
+    }
+
+    /* Setting up PMD, Checkstyle and Findbugs*/
+
+    apply plugin: 'checkstyle'
+    apply plugin: 'pmd'
+    apply plugin: 'findbugs'
+
+    findbugs {
+        ignoreFailures=true
+    }
+
+    pmd {
+        ignoreFailures = true
+    }
+
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
+
+    tasks.withType(Pmd){
+        reports{
+            xml.enabled=true
+            html.enabled=true
+        }
     }
 }
