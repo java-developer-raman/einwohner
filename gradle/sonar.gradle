@@ -1,0 +1,33 @@
+apply from: "$rootDir/gradle/utilities.gradle"
+
+task beginnSonarServerFallsErNichtLaüft() {
+    if(!getServerStatus().contains("SonarQube is running")){
+        startServer()
+    }
+}
+
+def getSonarHome(){
+    return versuchEinProperty('SONAR_HOME')
+}
+
+def getServerStatus(){
+    def comandOutputCapturer = new ByteArrayOutputStream()
+    exec {
+        workingDir getSonarHome()
+        commandLine './sonar.sh'
+        args 'status'
+        standardOutput = comandOutputCapturer
+    }
+    return comandOutputCapturer.toString().trim()
+}
+
+def startServer(){
+    def comandOutputCapturer = new ByteArrayOutputStream()
+    exec {
+        workingDir getSonarHome()
+        commandLine './sonar.sh'
+        args 'start'
+        standardOutput = comandOutputCapturer
+    }
+    return comandOutputCapturer.toString().trim()
+}

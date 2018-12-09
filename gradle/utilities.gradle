@@ -1,0 +1,14 @@
+/*
+ * Ein closure zu property versuchen in alle platz.
+ */
+ext.versuchEinProperty = {
+    //ob Property in Project ist, z.B. -PTOMCAT_HOME=/home/tomcat
+    if(project.hasProperty(it)){
+        return project[it]
+    } else if(System.getProperty(it) != null){
+        //ob Property in System properties ist, z.B. -DTOMCAT_HOME=/home/tomcat
+        return System.getProperty(it)
+    }
+    //ob Property in system environment ist, z.B. export TOMCAT_HOME=/home/tomcat
+    return System.getenv(it)
+}
