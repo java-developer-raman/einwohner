@@ -31,7 +31,7 @@ allprojects {
 }
 apply from: "$rootDir/gradle/sonar.gradle"
 //Prufen wir sonar server bevor code analysis
-project.tasks["sonarqube"].dependsOn 'beginnSonarServerFallsErNichtLaüft'
+project.tasks["sonarqube"].dependsOn 'schaltSonarServerEinFallsErNichtLaüft'
 
 subprojects { p ->
     repositories {

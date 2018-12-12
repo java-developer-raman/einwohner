@@ -16,12 +16,15 @@ task startServer(type: Exec, group: 'Server start/stop', description: 'To Start 
     //store the output instead of printing to the console:
     standardOutput = new ByteArrayOutputStream()
 
-    //extension method startServer.output() can be used to obtain the output:
+    //extension method schältServerEin.output() can be used to obtain the output:
     ext.output = {
         return standardOutput.toString()
     }
 }
 
+/*
+ * Verwenden Sie stopServer.output() zu task output zu drucken.
+ */
 task stopServer(type: Exec, group: 'Server start/stop', description: 'To Start and stop server'){
     workingDir getTomcatHome() + "/bin"
     commandLine './shutdown.sh'

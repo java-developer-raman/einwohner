@@ -1,27 +1,36 @@
 apply from: "$rootDir/gradle/utilities.gradle"
 
-task beginnSonarServerFallsErNichtLaüft() {
-    if(!getServerStatus().contains("SonarQube is running")){
-        startServer()
+task schaltSonarServerEinFallsErNichtLaüft(description: 'Start Sonar Server if not already running', group: 'Sonar Server start/stop') {
+    final SCHLAFEN_ZEIT = 10000
+    if(!istSonarServerLaüft()){
+        println 'Leider Server laüft nicht, schält Server ein'
+        schaltSonarServerEin()
+        println "Schalfe für $SCHLAFEN_ZEIT milli sekunden"
+        sleep(SCHLAFEN_ZEIT)
     }
+}
+
+task schaltSonarServerAus(type: Exec, description: 'Stop Sonar Server', group: 'Sonar Server start/stop'){
+    workingDir getSonarHome()
+    commandLine './sonar.sh'
+    args 'stop'
 }
 
 def getSonarHome(){
     return versuchEinProperty('SONAR_HOME')
 }
 
-def getServerStatus(){
+def istSonarServerLaüft(){
     def comandOutputCapturer = new ByteArrayOutputStream()
     exec {
-        workingDir getSonarHome()
-        commandLine './sonar.sh'
-        args 'status'
+        commandLine 'curl',  '-s', '-o', '/dev/null', '-w', '%{http_code}', versuchEinProperty('sonar.host.url')
+        ignoreExitValue true
         standardOutput = comandOutputCapturer
     }
-    return comandOutputCapturer.toString().trim()
+    return comandOutputCapturer.toString().trim() == '200'
 }
 
-def startServer(){
+def schaltSonarServerEin(){
     def comandOutputCapturer = new ByteArrayOutputStream()
     exec {
         workingDir getSonarHome()
