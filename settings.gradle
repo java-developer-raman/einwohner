@@ -4,4 +4,5 @@ include 'einwohner-core'
 include 'einwohner-web'
 include 'einwohner-orm'
 include 'einwohner-data'
+include 'einwohner-db'
 

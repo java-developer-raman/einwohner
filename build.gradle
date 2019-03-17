@@ -39,21 +39,6 @@ subprojects { p ->
         jcenter()
     }
     apply plugin: 'io.spring.dependency-management'
-
-    plugins.withId('java') {
-
-        jar {
-            manifest {
-                attributes("Implementation-Title": p.name,
-                        "Implementation-Version": version, "Author": "Raman Sharma")
-            }
-        }
-        configurations.all {
-            exclude group: "commons-logging", module: "commons-logging"
-        }
-        p.apply from: "$rootDir/gradle/dependencies.gradle"
-    }
-
     /* Setting für PMD, Checkstyle und Findbugs*/
 
     apply plugin: 'checkstyle'
@@ -81,4 +66,19 @@ subprojects { p ->
             html.enabled=true
         }
     }
+
+    plugins.withId('java') {
+
+        jar {
+            manifest {
+                attributes("Implementation-Title": p.name,
+                        "Implementation-Version": version, "Author": "Raman Sharma")
+            }
+        }
+        configurations.all {
+            exclude group: "commons-logging", module: "commons-logging"
+        }
+        p.apply from: "$rootDir/gradle/dependencies.gradle"
+    }
+
 }
