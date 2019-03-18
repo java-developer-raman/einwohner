@@ -9,13 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -42,12 +36,19 @@ public class PersonController {
         logger.debug("Person mit Id {} gelöscht", personId);
     }
 
-    @PutMapping(path = "/person")
+    @PutMapping(path = "/person/{personId}")
     @ResponseBody
     public PersonResponse personBearbeiten(@Valid @RequestBody PersonRequest personRequest){
         logger.debug("innen personBearbeiten");
         PersonDto personDto = transformer.transform(personRequest, PersonDto.class);
         return transformer.transform(personService.erstelltPerson(personDto), PersonResponse.class);
     }
+
+    @GetMapping(path = "/person/{personId}")
+    public PersonResponse personSuchen(@PathVariable("personId") String personId){
+        logger.debug("Person mit Id {} gefunden", personId);
+        return new PersonResponse();
+    }
+
 
 }
