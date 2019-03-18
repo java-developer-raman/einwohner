@@ -31,7 +31,7 @@ allprojects {
 }
 apply from: "$rootDir/gradle/sonar.gradle"
 //Prufen wir sonar server bevor code analysis
-project.tasks["sonarqube"].dependsOn 'schaltSonarServerEinFallsErNichtLaüft'
+//project.tasks["sonarqube"].dependsOn 'schaltSonarServerEinFallsErNichtLaüft'
 
 subprojects { p ->
     repositories {
@@ -41,7 +41,7 @@ subprojects { p ->
     apply plugin: 'io.spring.dependency-management'
     /* Setting für PMD, Checkstyle und Findbugs*/
 
-    apply plugin: 'checkstyle'
+    /*apply plugin: 'checkstyle'
     apply plugin: 'pmd'
     apply plugin: 'findbugs'
 
@@ -65,7 +65,7 @@ subprojects { p ->
             xml.enabled=true
             html.enabled=true
         }
-    }
+    } */
 
     plugins.withId('java') {
 
