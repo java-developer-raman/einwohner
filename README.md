@@ -31,3 +31,20 @@ Bitte achten Sie, **gradle tasks** command wird nicht alle Tasks schauen, sonder
 
 1. __gradle dependencies__ to look into the dependencies of a gradle project
 1. __gradle tasks__ to get list of all tasks
+1. You can create your custom configurtaions. And Then add jars into that configutation. And can you them later
+   e.g.
+   ```
+   configurations {
+      myRuntimeJars
+   }
+   dependencies {
+      myRuntimeJars project(':project')
+      myRuntimeJars 'org.spring:spring-web'
+   }
+   //Using these librarries to create on jar file
+   jar {
+      //This will add extracted jar files into the jar created by closure
+      from configurations.myRuntimeJars.collect (zipTree it) 
+   }
+   ```
+   
