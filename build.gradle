@@ -1,4 +1,5 @@
-// builscript closure is required to include a dependency which contains plugin for spring-bom. Since that plugin is not core or a community plugin
+// builscript closure is required to include a dependency which contains plugin for spring-bom "io.spring.dependency-management".
+Since that plugin is not core or a community plugin
 buildscript {
     repositories {
         mavenCentral()
