@@ -26,3 +26,8 @@
 ## integrieren Sonar qube, PMD, Checkstyle, Findbugs 
 1. Sehen Sie einwohner/build.gradle fuer weitere informationen.
 Bitte achten Sie, **gradle tasks** command wird nicht alle Tasks schauen, sondern verwenden Sie **gradle tasks --all**  
+
+## Notes / Troubleshooting
+
+1. __gradle dependencies__ to look into the dependencies of a gradle project
+1. __gradle tasks__ to get list of all tasks
