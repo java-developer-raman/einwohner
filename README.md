@@ -54,10 +54,10 @@ Bitte achten Sie, **gradle tasks** command wird nicht alle Tasks schauen, sonder
 1. Plugins declared through closure {} and "apply" is almost same. Normally script plugins are declared using __apply from: 'other.gradle'__ And binary plugins are declared using __plugins {id 'java'}__ . But if the used plugin is not part of gradle distribution. Then you need to add dependency to that jar to use the plugin.
 URL to refer: https://docs.gradle.org/current/userguide/plugins.html#sec:subprojects_plugins_dsl
 
-__Applying plugins with the plugins DSL__
-      The plugins DSL provides a succinct and convenient way to declare plugin dependencies. It works with the Gradle plugin portal to 
-      provide easy access to both core and community plugins.
-      ```
+1. __Applying plugins with the plugins DSL__
+The plugins DSL provides a succinct and convenient way to declare plugin dependencies. It works with the Gradle plugin portal to 
+provide easy access to both core and community plugins.
+```
       //Aplying a core plugin
       plugins {
         id 'java'
@@ -66,9 +66,9 @@ __Applying plugins with the plugins DSL__
       plugins {
         id 'com.jfrog.bintray' version '0.4.1'
       }
-      ```
-      The plugins {} block must also be a top level statement in the buildscript. It cannot be nested inside another construct (e.g. an 
-      if-statement or for-loop).
+```
+The plugins {} block must also be a top level statement in the buildscript. It cannot be nested inside another construct (e.g. an 
+if-statement or for-loop).
       
       
    
