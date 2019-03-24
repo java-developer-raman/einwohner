@@ -1,15 +1,18 @@
 /* Nur für die Java sub Projects, Jetzt Projects kann spring libraries ohne version benutzen */
 dependencyManagement {
     imports {
-        mavenBom 'org.springframework:spring-framework-bom:5.1.2.RELEASE'
+            mavenBom 'org.springframework:spring-framework-bom:5.1.2.RELEASE'
+            mavenBom "org.springframework.data:spring-data-releasetrain:Lovelace-RELEASE"
     }
     dependencies {
         dependency 'org.projectlombok:lombok:1.18.6'
         dependency group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.2'
         dependency group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.13.Final'
+        dependency group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.2.Final'
         dependency group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
         dependency group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
         dependency group: 'ch.qos.logback', name: 'logback-access', version: '1.2.3'
         dependency group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.25'
+        dependency group: 'org.liquibase', name: 'liquibase-core', version: '3.6.3'
     }
 }

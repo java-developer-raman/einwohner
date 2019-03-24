@@ -6,12 +6,15 @@ sourceCompatibility = 1.8
 
 dependencies {
     implementation project(':einwohner-orm')
+    implementation project(':einwohner-data')
 
     /*Spring libraries*/
     implementation 'org.springframework:spring-context'
     implementation 'org.springframework:spring-core'
     implementation 'org.springframework:spring-beans'
     implementation 'org.springframework:spring-aop'
+    implementation 'org.springframework:spring-tx'
+    implementation 'org.springframework.data:spring-data-jpa'
     implementation group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.2'
     implementation 'org.projectlombok:lombok'
 }

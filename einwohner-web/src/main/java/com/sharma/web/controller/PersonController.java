@@ -1,10 +1,7 @@
 package com.sharma.web.controller;
 
-import com.sharma.core.collaborator.Transformer;
-import com.sharma.core.dto.PersonDto;
 import com.sharma.core.service.PersonService;
-import com.sharma.data.resource.PersonRequest;
-import com.sharma.data.resource.PersonResponse;
+import com.sharma.data.resource.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,35 +16,33 @@ public class PersonController {
     private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
 
     @Autowired
-    private Transformer transformer;
-    @Autowired
     private PersonService personService;
 
     @PostMapping(path = "/person",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public PersonResponse personErstellen(@Valid @RequestBody PersonRequest personRequest){
-        logger.debug("innen personErstellen");
-        PersonDto personDto = transformer.transform(personRequest, PersonDto.class);
-        return transformer.transform(personService.erstelltPerson(personDto), PersonResponse.class);
+    public CreatePersonResponse personErstellen(@Valid @RequestBody CreatePersonRequest createPersonRequest){
+        logger.debug("Inside personErstellen");
+        return personService.createPerson(createPersonRequest);
     }
 
     @DeleteMapping(path = "/person/{personId}")
     public void personLoeschen(@PathVariable("personId") String personId){
-        logger.debug("Person mit Id {} gelöscht", personId);
+        personService.deletePersonById(Long.parseLong(personId));
+        logger.info("Person mit Id {} deleted", personId);
     }
 
     @PutMapping(path = "/person/{personId}")
     @ResponseBody
-    public PersonResponse personBearbeiten(@Valid @RequestBody PersonRequest personRequest){
-        logger.debug("innen personBearbeiten");
-        PersonDto personDto = transformer.transform(personRequest, PersonDto.class);
-        return transformer.transform(personService.erstelltPerson(personDto), PersonResponse.class);
+    public UpdatePersonResponse personBearbeiten(@PathVariable(name = "personId") String personId, @Valid @RequestBody UpdatePersonRequest updatePersonRequest){
+        logger.info("Updating person with Id {}", personId);
+        return personService.updatePerson(updatePersonRequest);
     }
 
     @GetMapping(path = "/person/{personId}")
-    public PersonResponse personSuchen(@PathVariable("personId") String personId){
+    public GetPersonResponse personSuchen(@PathVariable("personId") String personId){
+        GetPersonResponse getPersonResponse = personService.findPersonById(Long.parseLong(personId));
         logger.debug("Person mit Id {} gefunden", personId);
-        return new PersonResponse();
+        return getPersonResponse;
     }
 
 

@@ -1,7 +1,11 @@
 package com.sharma.core.service;
 
-import com.sharma.core.dto.PersonDto;
+import com.sharma.data.resource.*;
 
 public interface PersonService {
-    PersonDto erstelltPerson(PersonDto personDto);
+    CreatePersonResponse createPerson(CreatePersonRequest createPersonRequest);
+    UpdatePersonResponse updatePerson(UpdatePersonRequest updatePersonRequest);
+    GetPersonResponse findPersonById(Long personId);
+    void deletePersonById(Long personId);
+
 }

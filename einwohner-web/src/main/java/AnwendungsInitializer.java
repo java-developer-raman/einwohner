@@ -1,3 +1,5 @@
+import com.sharma.db.LiquibaseConfig;
+import com.sharma.orm.OrmConfiguration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AnwendungsInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -5,7 +7,7 @@ public class AnwendungsInitializer extends AbstractAnnotationConfigDispatcherSer
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[]{
-                AnwendungsConfiguration.class
+                AnwendungsConfiguration.class, OrmConfiguration.class, LiquibaseConfig.class
         };
     }
 

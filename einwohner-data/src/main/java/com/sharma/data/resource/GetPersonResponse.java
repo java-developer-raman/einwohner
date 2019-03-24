@@ -2,11 +2,7 @@ package com.sharma.data.resource;
 
 import com.sharma.data.validator.annotation.Email;
 import com.sharma.data.validator.annotation.PhoneNummer;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -15,7 +11,10 @@ import javax.validation.constraints.NotEmpty;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonRequest {
+public class GetPersonResponse {
+
+    @NotEmpty
+    private Long id;
     @NotEmpty
     private String vorName;
     @NotEmpty

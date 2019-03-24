@@ -1,0 +1,34 @@
+version: '3'
+services:
+  app:
+    image: ramansharma/einwohnertomcat:v0.0.2
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+      mode: replicated # It tells that each node in swarm can have many containers, global : means each node will have only one container
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 300M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    ports:
+      - '8080:8080'
+    networks:
+      - einwohner_net
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - '8180:8080'
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - einwohner_net
+networks:
+  einwohner_net:

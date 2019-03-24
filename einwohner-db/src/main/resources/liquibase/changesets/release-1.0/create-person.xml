@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="create-person-table" author="raman.sharma">
+        <createTable tableName="persons">
+            <column name="id" type="int" autoIncrement="true" >
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="vor_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nach_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="telefon_nummer" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="handy_nummer" type="varchar(255)" >
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

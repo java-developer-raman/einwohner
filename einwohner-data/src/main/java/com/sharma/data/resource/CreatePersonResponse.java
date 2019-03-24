@@ -15,7 +15,10 @@ import javax.validation.constraints.NotEmpty;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonResponse {
+public class CreatePersonResponse {
+
+    @NotEmpty
+    private Long id;
     @NotEmpty
     private String vorName;
     @NotEmpty
