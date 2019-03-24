@@ -10,7 +10,7 @@
     </appender>
 
     <appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>/usr/local/tomcat/logs/einwohner.log</File>
+        <File>/home/raman/programs/servers/apache-tomcat-9.0.17/logs/einwohner.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
             <FileNamePattern>rest-demo.%d{yyyy-MM-dd}.log</FileNamePattern>
