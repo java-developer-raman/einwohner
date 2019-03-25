@@ -26,21 +26,20 @@ public class PersonController {
     }
 
     @DeleteMapping(path = "/person/{personId}")
-    public void personLoeschen(@PathVariable("personId") String personId){
-        personService.deletePersonById(Long.parseLong(personId));
-        logger.info("Person mit Id {} deleted", personId);
+    public void personLoeschen(@PathVariable("personId") Long personId){
+        personService.deletePersonById(personId);
     }
 
     @PutMapping(path = "/person/{personId}")
     @ResponseBody
-    public UpdatePersonResponse personBearbeiten(@PathVariable(name = "personId") String personId, @Valid @RequestBody UpdatePersonRequest updatePersonRequest){
-        logger.info("Updating person with Id {}", personId);
+    public UpdatePersonResponse personBearbeiten(@PathVariable(name = "personId") Long personId, @Valid @RequestBody UpdatePersonRequest updatePersonRequest){
+        updatePersonRequest.setId(personId);
         return personService.updatePerson(updatePersonRequest);
     }
 
     @GetMapping(path = "/person/{personId}")
-    public GetPersonResponse personSuchen(@PathVariable("personId") String personId){
-        GetPersonResponse getPersonResponse = personService.findPersonById(Long.parseLong(personId));
+    public GetPersonResponse personSuchen(@PathVariable("personId") Long personId){
+        GetPersonResponse getPersonResponse = personService.findPersonById(personId);
         logger.debug("Person mit Id {} gefunden", personId);
         return getPersonResponse;
     }

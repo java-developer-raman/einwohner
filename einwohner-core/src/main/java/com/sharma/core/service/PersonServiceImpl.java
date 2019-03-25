@@ -4,12 +4,20 @@ import com.sharma.core.collaborator.Transformer;
 import com.sharma.data.resource.*;
 import com.sharma.orm.entity.PersonEntity;
 import com.sharma.orm.repository.PersonRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class PersonServiceImpl implements PersonService {
+
+    private static final Logger logger = LoggerFactory.getLogger(PersonServiceImpl.class);
+
 
     @Autowired
     private PersonRepository personRepository;
@@ -28,8 +36,18 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public UpdatePersonResponse updatePerson(UpdatePersonRequest updatePersonRequest) {
-        PersonEntity personEntity = personRepository.save(transformer.transform(updatePersonRequest, PersonEntity.class));
-        return transformer.transform(personEntity, UpdatePersonResponse.class);
+        Optional<PersonEntity> personEntityOptional = personRepository.findById(updatePersonRequest.getId());
+        if(personEntityOptional.isPresent()){
+            logger.info("Updating Person with Id {}", updatePersonRequest.getId());
+            PersonEntity personEntity = personEntityOptional.get();
+            personEntity.setEmail(updatePersonRequest.getEmail());
+            personEntity.setHandyNummer(updatePersonRequest.getHandyNummer());
+            personEntity.setTelefonNummer(updatePersonRequest.getTelefonNummer());
+            personEntity.setNachName(updatePersonRequest.getNachName());
+            personEntity.setVorName(updatePersonRequest.getVorName());
+            return transformer.transform(personRepository.save(personEntity), UpdatePersonResponse.class);
+        }
+        throw new RuntimeException("No Person found with id : " + updatePersonRequest.getId());
     }
 
     @Override
@@ -43,5 +61,6 @@ public class PersonServiceImpl implements PersonService {
     @Transactional
     public void deletePersonById(Long personId) {
         personRepository.deleteById(personId);
+        logger.info("Person with Id {} deleted.", personId);
     }
 }

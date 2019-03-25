@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdatePersonRequest {
+    private Long id;
     @NotEmpty
     private String vorName;
     @NotEmpty

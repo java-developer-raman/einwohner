@@ -1,13 +1,13 @@
 apply from: "$rootDir/gradle/utilities.gradle"
 
 task schaltSonarServerEinFallsErNichtLaüft(description: 'Start Sonar Server if not already running', group: 'Sonar Server start/stop') {
-    final SCHLAFEN_ZEIT = 10000
-    if(!istSonarServerLaüft()){
-        println 'Leider Server laüft nicht, schält Server ein'
-        schaltSonarServerEin()
-        println "Schalfe für $SCHLAFEN_ZEIT milli sekunden"
-        sleep(SCHLAFEN_ZEIT)
-    }
+//    final SCHLAFEN_ZEIT = 10000
+//    if(!istSonarServerLaüft()){
+//        println 'Leider Server laüft nicht, schält Server ein'
+//        schaltSonarServerEin()
+//        println "Schalfe für $SCHLAFEN_ZEIT milli sekunden"
+//        sleep(SCHLAFEN_ZEIT)
+//    }
 }
 
 task schaltSonarServerAus(type: Exec, description: 'Stop Sonar Server', group: 'Sonar Server start/stop'){

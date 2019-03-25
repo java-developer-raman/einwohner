@@ -64,7 +64,6 @@ public class OrmConfiguration {
 
     private Properties additionalProperties() {
         Properties properties = new Properties();
-        System.out.println("environment is : " + environment.toString());
         properties.setProperty("hibernate.hbm2ddl.auto", environment.getProperty("spring.jpa.hibernate.ddl-auto"));
         properties.setProperty("hibernate.dialect", environment.getProperty("spring.jpa.properties.hibernate.dialect"));
         //properties.setProperty("hibernate.current_session_context_class", environment.getProperty("spring.jpa.properties.hibernate.current_session_context_class"));

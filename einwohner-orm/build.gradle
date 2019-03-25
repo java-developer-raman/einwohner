@@ -10,5 +10,6 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-tx'
     implementation group: 'org.hibernate', name: 'hibernate-entitymanager'
     implementation 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     implementation 'mysql:mysql-connector-java'
 }

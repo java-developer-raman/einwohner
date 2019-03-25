@@ -1,8 +1,6 @@
 package com.sharma.orm.entity;
 
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,10 +8,13 @@ import javax.persistence.*;
 @Table(name = "persons")
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class PersonEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
     @Column(name = "vor_name", nullable = false)
     private String vorName;
