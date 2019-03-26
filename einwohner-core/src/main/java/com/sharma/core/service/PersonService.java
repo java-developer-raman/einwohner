@@ -7,5 +7,4 @@ public interface PersonService {
     UpdatePersonResponse updatePerson(UpdatePersonRequest updatePersonRequest);
     GetPersonResponse findPersonById(Long personId);
     void deletePersonById(Long personId);
-
 }
