@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ import javax.validation.constraints.NotEmpty;
 public class CreatePersonResponse {
 
     @NotEmpty
-    private Long id;
+    private UUID id;
     @NotEmpty
     private String vorName;
     @NotEmpty

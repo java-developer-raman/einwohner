@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -52,14 +53,14 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public GetPersonResponse findPersonById(Long personId) {
+    public GetPersonResponse findPersonById(UUID personId) {
         PersonEntity personEntity = personRepository.findById(personId).orElseThrow(() -> new DataNotFoundException("No Person Found with Id " + personId));
         return transformer.transform(personEntity, GetPersonResponse.class);
     }
 
     @Override
     @Transactional
-    public void deletePersonById(Long personId) {
+    public void deletePersonById(UUID personId) {
         personRepository.deleteById(personId);
         logger.info("Person with Id {} deleted.", personId);
     }

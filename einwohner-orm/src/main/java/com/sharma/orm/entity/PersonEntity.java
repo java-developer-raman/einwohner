@@ -3,6 +3,7 @@ package com.sharma.orm.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "persons")
@@ -12,10 +13,10 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Setter
-public class PersonEntity {
+public class PersonEntity extends AbstractEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue
+    private UUID id;
     @Column(name = "vor_name", nullable = false)
     private String vorName;
     @Column(name = "nach_name", nullable = false)

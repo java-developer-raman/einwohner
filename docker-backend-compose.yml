@@ -1,0 +1,42 @@
+# Startup
+# 1. sudo docker swarm init --advertise-addr 192.168.2.108
+# 2. sudo docker swarm join <token>
+# 3. sudo docker node ls
+# 4. sudo docker stack deploy -c docker-backend-compose.yml backend
+# 5. sudo docker service ls
+
+# Shutdown
+# 1. sudo docker service scale backend_db=0
+# 2. sudo docker service scale backend_visualizer=0
+# 3. sudo docker stack rm backend
+# 4. docker swarm leave --force
+
+version: '3.7'
+services:
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - backend_net
+  db:
+    image: mysql:latest
+    container_name: mysql
+    environment:PersonEntityBuilder
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == raspberrypi
+      replicas: 1
+    ports:
+      - '3306:3306'
+    networks:
+      - backend_net
+networks:
+  backend_net:

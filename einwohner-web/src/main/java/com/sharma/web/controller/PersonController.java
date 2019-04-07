@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 public class PersonController {
@@ -26,19 +27,19 @@ public class PersonController {
     }
 
     @DeleteMapping(path = "/person/{personId}")
-    public void personLoeschen(@PathVariable("personId") Long personId){
+    public void personLoeschen(@PathVariable("personId") UUID personId){
         personService.deletePersonById(personId);
     }
 
     @PutMapping(path = "/person/{personId}")
     @ResponseBody
-    public UpdatePersonResponse personBearbeiten(@PathVariable(name = "personId") Long personId, @Valid @RequestBody UpdatePersonRequest updatePersonRequest){
+    public UpdatePersonResponse personBearbeiten(@PathVariable(name = "personId") UUID personId, @Valid @RequestBody UpdatePersonRequest updatePersonRequest){
         updatePersonRequest.setId(personId);
         return personService.updatePerson(updatePersonRequest);
     }
 
     @GetMapping(path = "/person/{personId}")
-    public GetPersonResponse personSuchen(@PathVariable("personId") Long personId){
+    public GetPersonResponse personSuchen(@PathVariable("personId") UUID personId){
         GetPersonResponse getPersonResponse = personService.findPersonById(personId);
         logger.debug("Person mit Id {} gefunden", personId);
         return getPersonResponse;

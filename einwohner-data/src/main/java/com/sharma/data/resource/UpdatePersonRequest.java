@@ -5,6 +5,7 @@ import com.sharma.data.validator.annotation.PhoneNummer;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdatePersonRequest {
-    private Long id;
+    private UUID id;
     @NotEmpty
     private String vorName;
     @NotEmpty

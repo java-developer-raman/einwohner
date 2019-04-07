@@ -7,7 +7,10 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <changeSet id="create-person-table" author="raman.sharma">
         <createTable tableName="persons">
-            <column name="id" type="int" autoIncrement="true" >
+            <column name="id" type="varchar(36)" >
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="version" type="INT" >
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="vor_name" type="varchar(255)">
@@ -23,6 +26,18 @@
                 <constraints nullable="true"/>
             </column>
             <column name="handy_nummer" type="varchar(255)" >
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="DATETIME" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(50)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="DATETIME" >
+                <constraints nullable="true"/>
+            </column>
+            <column name="modified_by" type="varchar(50)" >
                 <constraints nullable="true"/>
             </column>
         </createTable>
