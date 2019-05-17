@@ -1,6 +1,7 @@
 package com.sharma.orm.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class PersonEntity extends AbstractEntity {
     @Id
     @GeneratedValue
+    @Type(type = "uuid-char")
     private UUID id;
     @Column(name = "vor_name", nullable = false)
     private String vorName;
