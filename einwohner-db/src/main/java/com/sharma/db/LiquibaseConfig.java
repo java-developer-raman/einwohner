@@ -1,7 +1,9 @@
 package com.sharma.db;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +14,17 @@ import javax.sql.DataSource;
 public class LiquibaseConfig {
 
     @Autowired
+    @Qualifier("adminDataSource")
     private DataSource dataSource;
 
     @Value("liquibase.contexts")
     private String liquibaseContexts;
+    @Value("db.admin.user")
+    private String adminUser;
+    @Value("db.admin.password")
+    private String adminPassword;
+    @Value("spring.datasource.url")
+    private String dbUrl;
 
     @Bean
     public SpringLiquibase springLiquibase(){
@@ -25,4 +34,5 @@ public class LiquibaseConfig {
         springLiquibaseBean.setContexts(liquibaseContexts);
         return springLiquibaseBean;
     }
+
 }
