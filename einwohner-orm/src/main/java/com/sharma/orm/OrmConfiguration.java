@@ -3,6 +3,7 @@ package com.sharma.orm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -26,6 +27,7 @@ public class OrmConfiguration {
     private Environment environment;
 
     @Bean
+    @Primary
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -34,6 +36,17 @@ public class OrmConfiguration {
         dataSource.setPassword(environment.getProperty("spring.datasource.password"));
         return dataSource;
     }
+
+    @Bean
+    public DataSource adminDataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl(environment.getProperty("spring.datasource.url"));
+        dataSource.setUsername(environment.getProperty("db.admin.user"));
+        dataSource.setPassword(environment.getProperty("db.admin.password"));
+        return dataSource;
+    }
+
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
