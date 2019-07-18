@@ -36,6 +36,9 @@ COPY einwohner-docker/metricbeat/metricbeat.yml /etc/metricbeat
 # Copy startup script, it will start all the applications, and make tomat as the entrypoint
 COPY einwohner-docker/main-process.sh $CATALINA_HOME/bin
 
+# Copy script to set environment variables for application
+COPY einwohner-docker/setenv.sh $CATALINA_HOME/bin
+
 CMD ["main-process.sh"]
 # Command to start tomcat
 #CMD ["catalina.sh", "run"]

@@ -1,5 +1,7 @@
 package com.sharma.orm;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,12 +25,15 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "com.sharma.orm.repository")
 @EnableTransactionManagement
 public class OrmConfiguration {
+    private static final Logger logger = LoggerFactory.getLogger(OrmConfiguration.class);
+
     @Autowired
     private Environment environment;
 
     @Bean
     @Primary
     public DataSource dataSource() {
+        logger.info("Creating Datasource for application user");
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl(environment.getProperty("spring.datasource.url"));
@@ -39,6 +44,7 @@ public class OrmConfiguration {
 
     @Bean
     public DataSource adminDataSource() {
+        logger.info("Creating Datasource for admin user to perform liquibase migration.");
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl(environment.getProperty("spring.datasource.url"));

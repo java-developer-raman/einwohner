@@ -7,4 +7,5 @@ dependencies {
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     implementation group: 'org.hibernate.validator', name: 'hibernate-validator'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
 }
