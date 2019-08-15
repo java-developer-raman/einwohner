@@ -68,8 +68,4 @@ provide easy access to both core and community plugins.
       }
 ```
 The plugins {} block must also be a top level statement in the buildscript. It cannot be nested inside another construct (e.g. an 
-if-statement or for-loop).
-      
-      
-   
-   
+if-statement or for-loop).   
