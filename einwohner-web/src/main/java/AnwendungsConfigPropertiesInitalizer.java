@@ -35,7 +35,7 @@ public class AnwendungsConfigPropertiesInitalizer implements ApplicationContextI
             logger.warn("Can not find environment property {app.conf.dir}. Please check if it was provided at application startup.");
         }
         try {
-            return PropertiesLoaderUtils.loadProperties(new FileSystemResource(applicationConfigDir + "/application.properties"));
+            return PropertiesLoaderUtils.loadProperties(new FileSystemResource(applicationConfigDir + "/einwohner-application-basic.properties"));
         } catch (IOException e) {
             throw new RuntimeException(String.format("Either file not found or Could not load properties from file %s", applicationConfigDir + "/application.properties"), e);
         }

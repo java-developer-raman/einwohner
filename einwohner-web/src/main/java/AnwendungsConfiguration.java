@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.sharma.web", "com.sharma.core"})
 @PropertySources({
-        @PropertySource(value = "file:${app.conf.dir}/application.properties", ignoreResourceNotFound = true),
+        @PropertySource(value = "file:${app.conf.dir}/einwohner-application-basic.properties", ignoreResourceNotFound = true),
         @PropertySource("classpath:application.default.properties")
 })
 public class AnwendungsConfiguration {
