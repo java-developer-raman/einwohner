@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sharma.core.collaborator.ApplicationManifestReader;
 import com.sharma.core.collaborator.SslBasedRestTemplateFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.jar.Manifest;
 
 /**
  * Application Initializer to load properties from Configuration server
@@ -29,9 +31,9 @@ public class AnwendungsConfigPropertiesInitalizer implements ApplicationContextI
         applicationContext.getEnvironment().getPropertySources().addFirst(configPropertySource);
     }
 
-    private Properties loadApplicationDefaultProperties(ConfigurableApplicationContext applicationContext){
+    private Properties loadApplicationDefaultProperties(ConfigurableApplicationContext applicationContext) {
         String applicationConfigDir = (String) applicationContext.getEnvironment().getSystemProperties().get("app.conf.dir");
-        if(applicationConfigDir == null) {
+        if (applicationConfigDir == null) {
             logger.warn("Can not find environment property {app.conf.dir}. Please check if it was provided at application startup.");
         }
         try {
@@ -43,7 +45,7 @@ public class AnwendungsConfigPropertiesInitalizer implements ApplicationContextI
 
     private static class ConfigServerPropertySource extends PropertySource {
 
-        private Map<String,Object> propertiesLoadedFromConfigServer;
+        private Map<String, Object> propertiesLoadedFromConfigServer;
 
         public ConfigServerPropertySource(String name, Properties applicationDefaultProperties) {
             super(name);
@@ -60,9 +62,11 @@ public class AnwendungsConfigPropertiesInitalizer implements ApplicationContextI
             return propertiesLoadedFromConfigServer.get(name);
         }
 
-        private String getUrlToFetchApplicationPropertiesFromConfigServer(Properties applicationDefaultProperties){
+        private String getUrlToFetchApplicationPropertiesFromConfigServer(Properties applicationDefaultProperties) {
             String configServerUrl = applicationDefaultProperties.getProperty("config.server.url");
-            String resourcePath = String.format("%s/%s", applicationDefaultProperties.getProperty("spring.application.name"), applicationDefaultProperties.getProperty("env"));
+            Manifest manifest = ApplicationManifestReader.getManifest();
+            String resourcePath = String.format("%s-%s/%s", applicationDefaultProperties.getProperty("spring.application.name"),
+                    manifest.getMainAttributes().getValue("Implementation-Version"), applicationDefaultProperties.getProperty("env"));
             return String.format("%s/%s", configServerUrl, resourcePath);
         }
 
