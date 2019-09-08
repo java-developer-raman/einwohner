@@ -37,7 +37,7 @@ public class AnwendungsConfigPropertiesInitalizer implements ApplicationContextI
         try {
             return PropertiesLoaderUtils.loadProperties(new FileSystemResource(applicationConfigDir + "/einwohner-application-basic.properties"));
         } catch (IOException e) {
-            throw new RuntimeException(String.format("Either file not found or Could not load properties from file %s", applicationConfigDir + "/application.properties"), e);
+            throw new RuntimeException(String.format("Either file not found or Could not load properties from file %s", applicationConfigDir + "/einwohner-application-basic.properties"), e);
         }
     }
 
@@ -62,8 +62,8 @@ public class AnwendungsConfigPropertiesInitalizer implements ApplicationContextI
 
         private String getUrlToFetchApplicationPropertiesFromConfigServer(Properties applicationDefaultProperties){
             String configServerUrl = applicationDefaultProperties.getProperty("config.server.url");
-            String resourcePath = applicationDefaultProperties.getProperty("spring.application.name") + "/" + applicationDefaultProperties.getProperty("env");
-            return configServerUrl + "/" + resourcePath;
+            String resourcePath = String.format("%s/%s", applicationDefaultProperties.getProperty("spring.application.name"), applicationDefaultProperties.getProperty("env"));
+            return String.format("%s/%s", configServerUrl, resourcePath);
         }
 
 

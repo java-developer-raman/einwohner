@@ -16,6 +16,7 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.vault.core.VaultTemplate;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -30,26 +31,35 @@ public class OrmConfiguration {
     @Autowired
     private Environment environment;
 
+    @Autowired
+    private VaultTemplate vaultTemplate;
+
     @Bean
     @Primary
     public DataSource dataSource() {
         logger.info("Creating Datasource for application user");
+        String decryptedPassword = vaultTemplate.opsForTransit().decrypt("einwohner", environment.getProperty("spring.datasource.password"));
+        //Do not know why there is a line feed caharacter at the end.
+        decryptedPassword = decryptedPassword.substring(0, decryptedPassword.length() - 1);
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl(environment.getProperty("spring.datasource.url"));
         dataSource.setUsername(environment.getProperty("spring.datasource.username"));
-        dataSource.setPassword(environment.getProperty("spring.datasource.password"));
+        dataSource.setPassword(decryptedPassword);
         return dataSource;
     }
 
     @Bean
     public DataSource adminDataSource() {
         logger.info("Creating Datasource for admin user to perform liquibase migration.");
+        String decryptedPassword = vaultTemplate.opsForTransit().decrypt("einwohner", environment.getProperty("db.admin.password"));
+        //Do not know why there is a line feed caharacter at the end.
+        decryptedPassword = decryptedPassword.substring(0, decryptedPassword.length() - 1);
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl(environment.getProperty("spring.datasource.url"));
         dataSource.setUsername(environment.getProperty("db.admin.user"));
-        dataSource.setPassword(environment.getProperty("db.admin.password"));
+        dataSource.setPassword(decryptedPassword);
         return dataSource;
     }
 
