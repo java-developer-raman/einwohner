@@ -72,4 +72,4 @@ if-statement or for-loop).
 
 1. __How to build and run with Docker__
 -> sudo docker build --tag=ramansharma/einwohnertomcat:v0.0.1 .
--> sudo docker run --mount type=bind,src=/home/raman/app-config/einwohner,destination=/usr/local/tomcat/conf,readonly --rm ramansharma/einwohnertomcat:v0.0.1
+-> sudo docker run -p 8443:8443 --mount type=bind,src=/home/raman/app-config/einwohner,destination=/usr/local/tomcat/conf,readonly --rm ramansharma/einwohnertomcat:v0.0.1
