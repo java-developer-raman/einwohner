@@ -43,7 +43,6 @@ CMD ["main-process.sh"]
 # Command to start tomcat
 #CMD ["catalina.sh", "run"]
 
-COPY einwohner-docker/application.properties /tmp/application.properties
 
 # Most changing file, so keeping it at last, so that it does not impact cache.
 COPY einwohner-web/build/libs/einwohner-web*.war $CATALINA_HOME/webapps/einwohner.war
