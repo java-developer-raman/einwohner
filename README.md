@@ -69,3 +69,7 @@ provide easy access to both core and community plugins.
 ```
 The plugins {} block must also be a top level statement in the buildscript. It cannot be nested inside another construct (e.g. an 
 if-statement or for-loop).   
+
+1. __How to build and run with Docker__
+-> sudo docker build --tag=ramansharma/einwohnertomcat:v0.0.1 .
+-> sudo docker run --mount type=bind,src=/home/raman/app-config/einwohner,destination=/usr/local/tomcat/conf,readonly --rm ramansharma/einwohnertomcat:v0.0.1
