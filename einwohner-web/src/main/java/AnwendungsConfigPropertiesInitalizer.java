@@ -1,18 +1,15 @@
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sharma.core.collaborator.ApplicationManifestReader;
 import com.sharma.core.collaborator.SslBasedRestTemplateFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.sharma.data.resource.configserver.ConfigServerProperties;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.jar.Manifest;
@@ -22,25 +19,38 @@ import java.util.jar.Manifest;
  */
 public class AnwendungsConfigPropertiesInitalizer implements ApplicationContextInitializer {
 
-    private static final Logger logger = LoggerFactory.getLogger(AnwendungsConfigPropertiesInitalizer.class);
-
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
+        // We need to load application's basic properties from filesystem manually, Because till this point spring environment has not
+        // loaded all the properties in it's environment
         Properties applicationDefaultProperties = loadApplicationDefaultProperties(applicationContext);
+        setTrustSoreAsSystemProperty(applicationDefaultProperties);
+        //Loading properties from config server and adding them into environment
         ConfigServerPropertySource configPropertySource = new ConfigServerPropertySource("Config Server", applicationDefaultProperties);
         applicationContext.getEnvironment().getPropertySources().addFirst(configPropertySource);
     }
 
+    private void setTrustSoreAsSystemProperty(Properties applicationProperties){
+        System.setProperty("javax.net.ssl.trustStore", applicationProperties.get("server.ssl.trust-store").toString());
+        System.setProperty("javax.net.ssl.trustStorePassword", applicationProperties.get("server.ssl.trust-store-password").toString());
+    }
+
     private Properties loadApplicationDefaultProperties(ConfigurableApplicationContext applicationContext) {
-        String applicationConfigDir = (String) applicationContext.getEnvironment().getSystemProperties().get("app.conf.dir");
-        if (applicationConfigDir == null) {
-            logger.warn("Can not find environment property {app.conf.dir}. Please check if it was provided at application startup.");
-        }
+        String configFile = getFullConfigPath(applicationContext);
         try {
-            return PropertiesLoaderUtils.loadProperties(new FileSystemResource(applicationConfigDir + "/einwohner-application-basic.properties"));
+            return PropertiesLoaderUtils.loadProperties(new FileSystemResource(configFile));
         } catch (IOException e) {
-            throw new RuntimeException(String.format("Either file not found or Could not load properties from file %s", applicationConfigDir + "/einwohner-application-basic.properties"), e);
+            throw new RuntimeException(String.format("Either file not found or Could not load properties from file %s", configFile), e);
         }
+    }
+
+    private String getFullConfigPath(ConfigurableApplicationContext applicationContext){
+        String configLocation = (String) applicationContext.getEnvironment().getSystemProperties().get("spring.config.location");
+        String configFileName = (String) applicationContext.getEnvironment().getSystemProperties().get("spring.config.name");
+        if(StringUtils.isEmpty(configLocation) || StringUtils.isEmpty(configFileName)){
+            throw new RuntimeException("Please provide system properties spring.config.location and spring.config.name");
+        }
+        return String.format("%s%s", configLocation, configFileName);
     }
 
     private static class ConfigServerPropertySource extends PropertySource {
@@ -51,10 +61,8 @@ public class AnwendungsConfigPropertiesInitalizer implements ApplicationContextI
             super(name);
             RestTemplate restTemplate = SslBasedRestTemplateFactory.createRestTemplate(applicationDefaultProperties);
             String configServerUrl = getUrlToFetchApplicationPropertiesFromConfigServer(applicationDefaultProperties);
-            logger.info("Trying to load application properties from config server " + configServerUrl);
             ConfigServerProperties configServerProperties = restTemplate.getForObject(configServerUrl, ConfigServerProperties.class);
-            propertiesLoadedFromConfigServer = configServerProperties.propertySources.get(0).source;
-            logger.info("Application properties loaded from config server");
+            propertiesLoadedFromConfigServer = configServerProperties.getPropertySources().get(0).getSource();
         }
 
         @Override
@@ -62,6 +70,13 @@ public class AnwendungsConfigPropertiesInitalizer implements ApplicationContextI
             return propertiesLoadedFromConfigServer.get(name);
         }
 
+        /**
+         * Config server hold application properties for each application's release e.g. einwohner-1.0-SNAPSHOT
+         * Whenever we release code we create properties for that release in Vault server. So that when we do any rollback to previous
+         * release it can be done automatically without any hassle.
+         * @param applicationDefaultProperties
+         * @return
+         */
         private String getUrlToFetchApplicationPropertiesFromConfigServer(Properties applicationDefaultProperties) {
             String configServerUrl = applicationDefaultProperties.getProperty("config.server.url");
             Manifest manifest = ApplicationManifestReader.getManifest();
@@ -69,52 +84,6 @@ public class AnwendungsConfigPropertiesInitalizer implements ApplicationContextI
                     manifest.getMainAttributes().getValue("Implementation-Version"), applicationDefaultProperties.getProperty("env"));
             return String.format("%s/%s", configServerUrl, resourcePath);
         }
-
-
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    private static class ConfigServerProperties {
-        @JsonProperty
-        private String name;
-        @JsonProperty
-        private String label;
-        @JsonProperty
-        private String version;
-        @JsonProperty
-        private String state;
-        @JsonProperty
-        private List<ConfigPropertySource> propertySources;
-
-        @Override
-        public String toString() {
-            return "ConfigServerProperties{" +
-                    "name='" + name + '\'' +
-                    ", label='" + label + '\'' +
-                    ", version='" + version + '\'' +
-                    ", state='" + state + '\'' +
-                    ", configPropertySources=" + propertySources +
-                    '}';
-        }
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    private static class ConfigPropertySource {
-        @JsonProperty
-        private String name;
-
-        private Map<String, Object> source;
-
-        public Map<String, Object> getSource() {
-            return source;
-        }
-
-        @Override
-        public String toString() {
-            return "ConfigPropertySource{" +
-                    "name='" + name + '\'' +
-                    ", source=" + getSource() +
-                    '}';
-        }
-    }
 }
