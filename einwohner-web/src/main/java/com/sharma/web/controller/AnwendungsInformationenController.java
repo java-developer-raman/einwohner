@@ -1,7 +1,7 @@
 package com.sharma.web.controller;
 
-import com.sharma.core.collaborator.ApplicationManifestReader;
 import com.sharma.data.resource.AnwendungsInfo;
+import com.sharma.shared.collaborator.ApplicationManifestReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;

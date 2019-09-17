@@ -1,5 +1,7 @@
 package com.sharma.orm;
 
+import com.sharma.config.server.client.DecryptTextConfigServerRequestSender;
+import com.sharma.data.resource.configserver.PayloadToDecrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,6 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.vault.core.VaultTemplate;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -31,16 +32,11 @@ public class OrmConfiguration {
     @Autowired
     private Environment environment;
 
-    @Autowired
-    private VaultTemplate vaultTemplate;
-
     @Bean
     @Primary
     public DataSource dataSource() {
         logger.info("Creating Datasource for application user");
-        String decryptedPassword = vaultTemplate.opsForTransit().decrypt("einwohner", environment.getProperty("spring.datasource.password"));
-        //Do not know why there is a line feed caharacter at the end.
-        decryptedPassword = decryptedPassword.substring(0, decryptedPassword.length() - 1);
+        String decryptedPassword = decryptText(environment.getProperty("spring.datasource.password"));
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl(environment.getProperty("spring.datasource.url"));
@@ -52,9 +48,7 @@ public class OrmConfiguration {
     @Bean
     public DataSource adminDataSource() {
         logger.info("Creating Datasource for admin user to perform liquibase migration.");
-        String decryptedPassword = vaultTemplate.opsForTransit().decrypt("einwohner", environment.getProperty("db.admin.password"));
-        //Do not know why there is a line feed caharacter at the end.
-        decryptedPassword = decryptedPassword.substring(0, decryptedPassword.length() - 1);
+        String decryptedPassword = decryptText(environment.getProperty("db.admin.password"));
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl(environment.getProperty("spring.datasource.url"));
@@ -63,6 +57,13 @@ public class OrmConfiguration {
         return dataSource;
     }
 
+    private String decryptText(String encryptedText){
+        PayloadToDecrypt payloadToDecrypt = new PayloadToDecrypt();
+        payloadToDecrypt.setTextToDecrypt(encryptedText);
+        payloadToDecrypt.setApplicationName("einwohner");
+        DecryptTextConfigServerRequestSender decryptTextRequestSender = new DecryptTextConfigServerRequestSender(environment);
+        return decryptTextRequestSender.postDecryptText(payloadToDecrypt);
+    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -78,6 +79,7 @@ public class OrmConfiguration {
         em.setJpaProperties(additionalProperties());
         return em;
     }
+
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();

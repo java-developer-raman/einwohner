@@ -1,4 +1,4 @@
-package com.sharma.core.collaborator;
+package com.sharma.shared.collaborator;
 
 import java.io.InputStream;
 import java.net.URL;

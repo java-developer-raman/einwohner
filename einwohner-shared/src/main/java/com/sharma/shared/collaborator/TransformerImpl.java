@@ -1,4 +1,4 @@
-package com.sharma.core.collaborator;
+package com.sharma.shared.collaborator;
 
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;

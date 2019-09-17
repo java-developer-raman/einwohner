@@ -5,6 +5,10 @@ plugins {
 sourceCompatibility = 1.8
 
 dependencies {
+    implementation project(':einwohner-shared')
+    implementation project(':einwohner-data')
+    implementation project(':einwohner-config-server-client')
+
     implementation 'org.springframework.data:spring-data-jpa'
     implementation group: 'org.springframework', name: 'spring-orm'
     implementation group: 'org.springframework', name: 'spring-tx'

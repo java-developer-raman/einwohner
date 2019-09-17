@@ -43,11 +43,11 @@ CMD ["main-process.sh"]
 # Command to start tomcat
 #CMD ["catalina.sh", "run"]
 
+EXPOSE 8443
 
 # Most changing file, so keeping it at last, so that it does not impact cache.
 COPY einwohner-web/build/libs/einwohner-web*.war $CATALINA_HOME/webapps/einwohner.war
 
-EXPOSE 8080 80 8443 443
 ###############################Commands to build and push Image################################
 #sudo docker build --tag=ramansharma/einwohnertomcat:v0.0.1 .
 #sudo docker run --rm ramansharma/einwohnertomcat:v0.0.1 env

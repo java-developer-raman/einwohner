@@ -1,10 +1,10 @@
 package com.sharma.core.service;
 
-import com.sharma.core.collaborator.Transformer;
 import com.sharma.data.exception.DataNotFoundException;
 import com.sharma.data.resource.*;
 import com.sharma.orm.entity.PersonEntity;
 import com.sharma.orm.repository.PersonRepository;
+import com.sharma.shared.collaborator.Transformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

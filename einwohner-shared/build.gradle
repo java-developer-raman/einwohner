@@ -5,10 +5,6 @@ plugins {
 sourceCompatibility = 1.8
 
 dependencies {
-    implementation project(':einwohner-orm')
-    implementation project(':einwohner-data')
-    implementation project(':einwohner-shared')
-
     /*Spring libraries*/
     implementation 'org.springframework:spring-context'
     implementation 'org.springframework:spring-core'

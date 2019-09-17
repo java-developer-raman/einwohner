@@ -17,8 +17,10 @@ project.apply from: "$rootDir/gradle/deployment.gradle"
 dependencies {
     implementation project(':einwohner-data')
     implementation project(':einwohner-core')
+    implementation project(':einwohner-shared')
     implementation project(':einwohner-orm')
     implementation project(':einwohner-db')
+    implementation project(':einwohner-config-server-client')
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation 'org.springframework:spring-webmvc'

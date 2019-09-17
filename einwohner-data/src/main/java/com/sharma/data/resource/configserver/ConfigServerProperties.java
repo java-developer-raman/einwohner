@@ -21,6 +21,15 @@ public class ConfigServerProperties {
     @JsonProperty
     private List<ConfigPropertySource> propertySources;
 
+    private Map<String, Object> properties;
+
+    public String getProperty(String propertyName){
+        if(properties == null){
+            properties = propertySources.get(0).getSource();
+        }
+        return (String) properties.get(propertyName);
+    }
+
     @Override
     public String toString() {
         return "ConfigServerProperties{" +

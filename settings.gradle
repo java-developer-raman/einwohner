@@ -5,4 +5,6 @@ include 'einwohner-web'
 include 'einwohner-orm'
 include 'einwohner-data'
 include 'einwohner-db'
+include 'einwohner-shared'
+include 'einwohner-config-server-client'
 
