@@ -72,5 +72,5 @@ if-statement or for-loop).
 
 1. __How to build and run with Docker__
 -> sudo docker build --tag=ramansharma/einwohnertomcat:v0.0.1 .
--> sudo docker run -p 8443:8443 --mount type=bind,src=/home/raman/app-config/einwohner,destination=/usr/local/tomcat/conf,readonly --rm ramansharma/einwohnertomcat:v0.0.1
+-> sudo docker run -p 8443:8443 --mount type=bind,src=/home/raman/programs/servers/app-conf/einwohner,destination=/usr/local/tomcat/app-conf,readonly --rm ramansharma/einwohnertomcat:v0.0.1
 -> Access health page : https://localhost:8443/einwohner/rest/anwendungs-info
