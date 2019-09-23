@@ -1,0 +1,10 @@
+# If you want to run command as "sudo service filebeat start", then use this alias.
+# But downside of this alias is then user will be able to start or stop all the services. So use it with care.
+# Cmnd_Alias SERVICE_COMMAND /usr/sbin/service
+
+# This commannd alias will give sudo permissions for only specific commands
+Cmnd_Alias	FILEBEAT_METRICBEAT = /etc/init.d/filebeat, /etc/init.d/metricbeat, /usr/bin/metricbeat
+
+# Giving user einwohner to execute the command using sudo without any password
+# Followed this page http://www.softpanorama.org/Access_control/Sudo/sudoer_file_examples.shtml
+einwohner ALL= NOPASSWD: FILEBEAT_METRICBEAT

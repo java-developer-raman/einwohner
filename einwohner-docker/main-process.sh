@@ -7,17 +7,17 @@ trap 'true' SIGINT SIGTERM
 stop() {
  echo "Stopping the processes gracefully..."
  $CATALINA_HOME/bin/catalina.sh stop
- service filebeat stop
- service metricbeat stop
+ sudo /etc/init.d/filebeat stop
+ sudo /etc/init.d/metricbeat stop
 }
 
 start() {
  echo "Starting Filebeat"
- service filebeat start
+ sudo /etc/init.d/filebeat start
 
  echo "Starting MetricBeat"
- metricbeat setup -e
- service metricbeat start
+ sudo metricbeat setup -e
+ sudo /etc/init.d/metricbeat start
 
  echo "Starting Tomcat"
  #Start Tomcat as background process, then main-process.sh will be waiting for tomcat to exit
