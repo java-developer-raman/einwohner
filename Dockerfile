@@ -60,12 +60,18 @@ COPY einwohner-docker/main-process.sh $CATALINA_HOME/bin
 # Copy script to set environment variables for application
 COPY einwohner-docker/setenv.sh $CATALINA_HOME/bin
 
-CMD ["main-process.sh"]
-
 # Most changing file, so keeping it at last, so that it does not impact cache.
 COPY einwohner-web/build/libs/einwohner-web*.war $CATALINA_HOME/webapps/einwohner.war
 
+CMD ["main-process.sh"]
 ###############################Commands to build and push Image################################
 #sudo docker build --tag=ramansharma/einwohnertomcat:v0.0.1 .
 #sudo docker run --rm ramansharma/einwohnertomcat:v0.0.1 env
 #sudo docker push ramansharma/einwohnertomcat:v0.0.1
+#--cap-add=SYS_ADMIN debian:jessie sh -c 'mount -t securityfs none /mnt && echo Done!'
+
+#Load apparmor profile
+# sudo apparmor_parser -r -W /home/raman/raman_work/IdeaProjects/einwohner/einwohner-docker/einwohner-apparmor
+
+# Run docker container with apparmor profile
+# sudo docker run -p 8443:8443 --name einwohner --security-opt "apparmor=einwohner-apparmor" --mount type=bind,src=/home/raman/programs/servers/app-conf/einwohner,destination=/usr/local/tomcat/app-conf,readonly --rm ramansharma/einwohnertomcat:v0.0.1
