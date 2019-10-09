@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-export JAVA_OPTS="$JAVA_OPTS -Dlogback.configurationFile=$CATALINA_HOME/app-conf/logback.xml -Dlog.dir=$CATALINA_HOME/logs -Dspring.config.location=$CATALINA_HOME/app-conf/ -Dspring.config.name=einwohner-application-basic.properties"
+export JAVA_OPTS="$JAVA_OPTS -Dlogback.configurationFile=$CATALINA_HOME/app-conf/logback.xml -Dlog.dir=$CATALINA_HOME/app-logs -Dspring.config.location=$CATALINA_HOME/app-conf/ -Dspring.config.name=einwohner-application-basic.properties"

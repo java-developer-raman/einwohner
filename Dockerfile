@@ -38,6 +38,8 @@ RUN ln -s /dev/stdout ./logs/einwohner.log \
      && ln -s /dev/stdout ./logs/localhost*.log \
      && ln -s /dev/stdout ./logs/localhost_access_log*.txt
 
+# Copy logging properties into conf, to update logs path, so that docker container creates logs in volume
+COPY einwohner-docker/logging.properties $CATALINA_HOME/conf
 #######################################Setup Metricbeat##########################################
 #  Metricbeat needs a directory under /var/lib
 RUN mkdir /var/lib/metricbeat && chown -R einwohner: /var/lib/metricbeat && chmod u+rw /var/lib/metricbeat
@@ -74,4 +76,4 @@ CMD ["main-process.sh"]
 # sudo apparmor_parser -r -W /home/raman/raman_work/IdeaProjects/einwohner/einwohner-docker/einwohner-apparmor
 
 # Run docker container with apparmor profile
-# sudo docker run -p 8443:8443 --name einwohner --security-opt "apparmor=einwohner-apparmor" --mount type=bind,src=/home/raman/programs/servers/app-conf/einwohner,destination=/usr/local/tomcat/app-conf,readonly --rm ramansharma/einwohnertomcat:v0.0.1
+# sudo docker run -p 8443:8443 --name einwohner --security-opt "apparmor=einwohner-apparmor" --mount type=bind,src=/home/raman/programs/servers/app-conf/einwohner,destination=/usr/local/tomcat/app-conf,readonly --mount type=bind,src=/home/raman/programs/servers/app-logs/einwohner,destination=/usr/local/tomcat/app-logs --rm ramansharma/einwohnertomcat:v0.0.1
