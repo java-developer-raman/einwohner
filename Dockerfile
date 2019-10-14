@@ -54,16 +54,24 @@ COPY einwohner-docker/filebeat/filebeat.yml /etc/filebeat
 #######################################Give Sudo power to User to run services##################
 COPY einwohner-docker/sudo-power-for-user /etc/sudoers.d/
 
-USER einwohner
-
 # Copy startup script, it will start all the applications, and make tomat as the entrypoint
 COPY einwohner-docker/main-process.sh $CATALINA_HOME/bin
+
+RUN chown einwohner:einwohner $CATALINA_HOME/bin/main-process.sh && chmod 0511 $CATALINA_HOME/bin/main-process.sh
+
+USER einwohner
 
 # Copy script to set environment variables for application
 COPY einwohner-docker/setenv.sh $CATALINA_HOME/bin
 
+# With build argument we can decide which config server jar needs to be copied
+ARG EINWOHNER_VERSION
+
+# Creating environment variable so that we can inspect, what is the version of config server running in container
+# Making it same as build argument, If at build time variable is not set it's default value will be taken.
+ENV EINWOHNER_VERSION=${EINWOHNER_VERSION:-1.0-SNAPSHOT}
 # Most changing file, so keeping it at last, so that it does not impact cache.
-COPY einwohner-web/build/libs/einwohner-web*.war $CATALINA_HOME/webapps/einwohner.war
+COPY einwohner-web/build/libs/einwohner-web-${EINWOHNER_VERSION}.war $CATALINA_HOME/webapps/einwohner.war
 
 CMD ["main-process.sh"]
 ###############################Commands to build and push Image################################
