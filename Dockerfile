@@ -56,6 +56,9 @@ COPY einwohner-docker/sudo-power-for-user /etc/sudoers.d/
 
 # Copy startup script, it will start all the applications, and make tomat as the entrypoint
 COPY einwohner-docker/main-process.sh $CATALINA_HOME/bin
+COPY einwohner-docker/string-utils.sh $CATALINA_HOME/bin
+COPY einwohner-docker/build-application-environment.sh $CATALINA_HOME/bin
+
 
 RUN chown einwohner:einwohner $CATALINA_HOME/bin/main-process.sh && chmod 0511 $CATALINA_HOME/bin/main-process.sh
 
@@ -73,6 +76,8 @@ ENV EINWOHNER_VERSION=${EINWOHNER_VERSION:-1.0-SNAPSHOT}
 # Most changing file, so keeping it at last, so that it does not impact cache.
 COPY einwohner-web/build/libs/einwohner-web-${EINWOHNER_VERSION}.war $CATALINA_HOME/webapps/einwohner.war
 
+COPY einwohner-docker/environment/dev/* /usr/local/tomcat/conf/
+COPY einwohner-docker/environment/einwohner-application-basic.properties.tpl /usr/local/tomcat/conf/
 CMD ["main-process.sh"]
 ###############################Commands to build and push Image################################
 #sudo docker build --tag=ramansharma/einwohnertomcat:v0.0.1 .

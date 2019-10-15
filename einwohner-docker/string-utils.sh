@@ -24,9 +24,28 @@ split_string() {
   echo "$1" | split_input "$2"
 }
 
-split_input() {
+sub_string() {
+  main_string=$1
+  index=$2
+  echo "${line:start_index_property_value}"
+}
+
+}split_input() {
   local sep="${1:-$' \t'}"
   tr "$sep" '\n'                    |
   sed -Ee 's/^(.*[ ,?*].*)$/"\1"/'  |
   tr '\n' ' '
+}
+
+ltrim() {
+ str=$1
+ echo `echo $str | sed -e 's/^[[:space:]]*//'`
+}
+rtrim() {
+ str=$1
+ echo `echo $str | sed -e 's/[[:space:]]$*//'`
+}
+trim() {
+ str=$1
+ echo `echo $str | sed -Ee 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'`
 }

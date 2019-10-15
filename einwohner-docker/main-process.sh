@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source build-application-environment.sh
 # To trap the signals e.g. ctrl + c or SIGTERM initiated by docker container stop command, It will interrupt the
 # current waiting process, and then stop will be invoked at last.
 trap 'true' SIGINT SIGTERM
@@ -23,7 +23,7 @@ start() {
  #Start Tomcat as background process, then main-process.sh will be waiting for tomcat to exit
  $CATALINA_HOME/bin/catalina.sh run -config $CATALINA_HOME/app-conf/server-einwohner.xml &
 }
-
+build_application_properties
 start
 
 # "${@}", In case if we need to execute the commands passed
