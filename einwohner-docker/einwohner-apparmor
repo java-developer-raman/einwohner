@@ -82,7 +82,10 @@ profile einwohner-apparmor flags=(attach_disconnected,mediate_deleted) {
   /usr/local/tomcat/logs/** rw,
   /usr/local/tomcat/temp/** w,
   /usr/local/tomcat/webapps/** w,
-
+  /usr/local/tomcat/conf/dev/** rwix,
+  /usr/local/tomcat/conf/dev/ rwix,
+  /usr/local/tomcat/conf/test/** rwix,
+  /usr/local/tomcat/conf/test/ rwix,
   /usr/local/tomcat/bin/** ix,
   /docker-java-home/jre/bin/** ix,
   /bin/dash ix,

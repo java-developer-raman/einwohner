@@ -30,7 +30,7 @@ sub_string() {
   echo "${line:start_index_property_value}"
 }
 
-}split_input() {
+split_input() {
   local sep="${1:-$' \t'}"
   tr "$sep" '\n'                    |
   sed -Ee 's/^(.*[ ,?*].*)$/"\1"/'  |
@@ -41,10 +41,12 @@ ltrim() {
  str=$1
  echo `echo $str | sed -e 's/^[[:space:]]*//'`
 }
+
 rtrim() {
  str=$1
  echo `echo $str | sed -e 's/[[:space:]]$*//'`
 }
+
 trim() {
  str=$1
  echo `echo $str | sed -Ee 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'`
