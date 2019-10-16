@@ -37,7 +37,8 @@ build_application_properties() {
 remove_application_properties() {
     # For security reasons properties files used to startup app will be removed, as it contains sensitive data, and is no more required.
     echo "Removing startup files with sensitive information"
-    for (( i = 0; i < 10; ++i )); do
+    files_removed_flag=0
+    for (( i = 0; i < 20; ++i )); do
         app_info=$(curl -k https://localhost:8443/einwohner/rest/anwendungs-info | grep $app_ready_response)
         echo $app_info
         if [[ -z "$app_info" ]]; then
@@ -46,9 +47,13 @@ remove_application_properties() {
         else
             rm -f $CATALINA_HOME/conf/einwohner-application-basic.properties $CATALINA_HOME/conf/einwohner-application-basic.properties.tpl
             echo "Startup Files have been removed."
+            files_removed_flag=1
             break
         fi
     done
+    if [[ $files_removed_flag -eq 0 ]]; then
+        echo "Startup Files were not removed."
+    fi
 }
 
 keep_only_environment_specific_keystores(){
