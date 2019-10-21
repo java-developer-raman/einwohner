@@ -4,14 +4,14 @@ source manage-application-environment.sh
 # current waiting process, and then stop will be invoked at last.
 trap 'true' SIGINT SIGTERM
 
-stop_application() {
+stop_app() {
  echo "Stopping the processes gracefully..."
  $CATALINA_HOME/bin/catalina.sh stop
  sudo /etc/init.d/filebeat stop
  sudo /etc/init.d/metricbeat stop
 }
 
-start_application() {
+start_app() {
  echo "Starting Filebeat"
  sudo /etc/init.d/filebeat start
 
@@ -24,10 +24,10 @@ start_application() {
  $CATALINA_HOME/bin/catalina.sh run -config $CATALINA_HOME/app-conf/server-einwohner.xml &
 }
 
-build_application_properties
+build_app_properties
 keep_only_environment_specific_keystores
-start_application
-remove_application_properties
+start_app
+remove_app_properties_after_app_is_ready
 
 # "${@}", In case if we need to execute the commands passed
 
@@ -36,4 +36,4 @@ remove_application_properties
 wait $!
 
 # Stopping all the processes...
-stop_application
+stop_app
