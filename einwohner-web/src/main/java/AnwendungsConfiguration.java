@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.sharma.web", "com.sharma.core", "org.springframework.vault.config", "com.sharma.shared", "com.sharma.config.server.client"})
+@ComponentScan(basePackages = {"com.sharma.web", "com.sharma.core", "com.sharma.shared", "com.sharma.config.server.client"})
 @PropertySources({
         @PropertySource("classpath:application.default.properties")
 })
