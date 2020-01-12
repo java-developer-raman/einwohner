@@ -57,6 +57,7 @@ COPY einwohner-docker/sudo-power-for-user /etc/sudoers.d/
 # Copy startup script, it will start all the applications, and make tomat as the entrypoint
 COPY einwohner-docker/main-process.sh $CATALINA_HOME/bin
 COPY einwohner-docker/string-utils.sh $CATALINA_HOME/bin
+COPY einwohner-docker/check-if-healthy.sh $CATALINA_HOME/bin
 COPY einwohner-docker/manage-application-environment.sh $CATALINA_HOME/bin
 
 

@@ -24,6 +24,7 @@ start_app() {
  $CATALINA_HOME/bin/catalina.sh run -config $CATALINA_HOME/app-conf/server-einwohner.xml &
 }
 
+setup_container_environment_properties
 build_app_properties
 keep_only_environment_specific_keystores
 start_app

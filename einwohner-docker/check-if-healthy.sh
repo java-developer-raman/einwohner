@@ -1,0 +1,1 @@
+curl -k https://localhost:8443/einwohner/rest/anwendungs-info | grep '{"projectName":"einwohner-shared"' > /dev/null && exit 0 || exit 1
