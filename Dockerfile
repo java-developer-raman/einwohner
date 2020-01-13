@@ -60,7 +60,8 @@ COPY einwohner-docker/string-utils.sh $CATALINA_HOME/bin
 COPY einwohner-docker/check-if-healthy.sh $CATALINA_HOME/bin
 COPY einwohner-docker/manage-application-environment.sh $CATALINA_HOME/bin
 
-
+COPY einwohner-docker/server.xml $CATALINA_HOME/conf/server.xml
+RUN chown einwohner:einwohner $CATALINA_HOME/conf/server.xml
 RUN chown einwohner:einwohner $CATALINA_HOME/bin/main-process.sh && chmod 0511 $CATALINA_HOME/bin/main-process.sh
 
 USER einwohner
@@ -92,4 +93,4 @@ CMD ["main-process.sh"]
 # sudo apparmor_parser -r -W /home/raman/raman_work/IdeaProjects/einwohner/einwohner-docker/einwohner-apparmor
 
 # Run docker container with apparmor profile
-# sudo docker run -p 8443:8443 --name einwohner --security-opt "apparmor=einwohner-apparmor" --mount type=bind,src=/home/raman/programs/servers/app-conf/einwohner,destination=/usr/local/tomcat/app-conf,readonly --mount type=bind,src=/home/raman/programs/servers/app-logs/einwohner,destination=/usr/local/tomcat/app-logs --rm ramansharma/einwohnertomcat:v0.0.1
+# sudo docker run -p 8443:8443 --name einwohner --security-opt "apparmor=einwohner-apparmor" --mount type=bind,src=/home/raman/programs/servers/app-conf/einwohner/config-server.properties,destination=/usr/local/tomcat/app-conf/config-server.properties,readonly --mount type=bind,src=/home/raman/programs/servers/app-logs/einwohner,destination=/usr/local/tomcat/app-logs --mount type=bind,src=/home/raman/programs/servers/host.properties,destination=/usr/local/tomcat/conf/host/host.properties --rm ramansharma/einwohnertomcat:v1.0.0

@@ -6,6 +6,7 @@ readonly config_server_input="/usr/local/tomcat/app-conf/config-server.propertie
 readonly app_properties_template_path="/usr/local/tomcat/conf/einwohner-application-basic.properties.tpl"
 readonly app_properties_path="/usr/local/tomcat/conf/einwohner-application-basic.properties"
 readonly host_properties_path="/usr/local/tomcat/conf/host/host.properties"
+readonly server_xml_path="/usr/local/tomcat/conf/server.xml"
 
 setup_container_environment_properties() {
     echo "Setting up default container properties build from host properties file $host_properties_path"
@@ -39,6 +40,10 @@ build_app_properties() {
         fi
     done < "$app_properties_template_path"
     echo "Application properties were build into $app_properties_path"
+
+    # replacing tls password token with actual password
+    tls_keystore_password=$(ltrim $(grep "server.ssl.key-store-password" $app_properties_path | cut -d '=' -f2))
+    sed -i -e "s/#tls_keystore_password#/$tls_keystore_password/g" $server_xml_path
 }
 
 remove_app_properties_after_app_is_ready() {

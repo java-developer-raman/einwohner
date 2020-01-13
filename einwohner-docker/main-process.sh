@@ -21,7 +21,7 @@ start_app() {
 
  echo "Starting Tomcat"
  #Start Tomcat as background process, then main-process.sh will be waiting for tomcat to exit
- $CATALINA_HOME/bin/catalina.sh run -config $CATALINA_HOME/app-conf/server-einwohner.xml &
+ $CATALINA_HOME/bin/catalina.sh run -config $CATALINA_HOME/conf/server.xml &
 }
 
 setup_container_environment_properties
