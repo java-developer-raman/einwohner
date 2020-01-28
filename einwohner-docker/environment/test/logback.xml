@@ -21,12 +21,10 @@
             <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
         </encoder>
     </appender>
-<!--
     <logger name="org.springframework" level="debug" additivity="false">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="dailyRollingFileAppender" />
     </logger>
--->
     <logger name="com.sharma" level="debug" additivity="false">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="dailyRollingFileAppender" />
